@@ -62,13 +62,13 @@ class DoublyLinkedList {
     }
 
     // if index is 0, prepend
-    if(index == 0){
+    if (index == 0) {
       this.prepend(value);
       return this;
     }
 
     // if index is equal to this.length, append
-    if(index == this.length){
+    if (index == this.length) {
       this.append(value);
       return this;
     }
@@ -77,11 +77,64 @@ class DoublyLinkedList {
     let newNode = new Node(value);
     let previousNode = this.head;
 
-    for(let k = 0; k < index - 1; k++){
+    for (let k = 0; k < index - 1; k++) {
       previousNode = previousNode.next;
     }
 
     let nextNode = previousNode.next
 
+    newNode.next = nextNode;
+    previousNode.next = newNode;
+    newNode.previous = previousNode;
+    nextNode.previous = newNode;
+
+    this.length++;
+    this.printList();
+
+  }
+
+  // Remove a node
+  remove(index) {
+    if (!Number.isInteger(index) || index < 0 || index > this.length) {
+      console.log(`invalid index. Current length is ${this.length}.`);
+      return this;
+    }
+
+    // Remove head
+    if (index == 0) {
+      this.head = this.head.next;
+      this.head.previous = null;
+
+      this.length--;
+      this.printList();
+      return this;
+    }
+
+    // Remove tail
+    if (index === this.length - 1) {
+      this.tail = this.tail.previous;
+      this.tail.next = null;
+
+      this.length--;
+      this.printList();
+      return this;
+    }
+
+    // Remove node at an index
+    let previousNode = this.head;
+
+    for (let k = 0; k < index - 1; k++) {
+      previousNode = previousNode.next;
+    }
+
+    let deleteNode = previousNode.next
+    let nextNode = deleteNode.next;
+
+    previousNode.next = nextNode;
+    nextNode.previous = previousNode;
+
+    this.length--;
+    this.printList();
+    return this;
   }
 }
