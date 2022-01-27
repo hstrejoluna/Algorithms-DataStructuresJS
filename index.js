@@ -53,4 +53,35 @@ class DoublyLinkedList {
     this.length++;
     this.printList();
   }
+
+  // Insert node at a given index
+  insert(index, value) {
+    if (!Number.isInteger(index) || index < 0 || index > this.length + 1) {
+      console.log(`Invalid index. Current length is ${this.length}.`);
+      return this;
+    }
+
+    // if index is 0, prepend
+    if(index == 0){
+      this.prepend(value);
+      return this;
+    }
+
+    // if index is equal to this.length, append
+    if(index == this.length){
+      this.append(value);
+      return this;
+    }
+
+    // Reach the node at that index
+    let newNode = new Node(value);
+    let previousNode = this.head;
+
+    for(let k = 0; k < index - 1; k++){
+      previousNode = previousNode.next;
+    }
+
+    let nextNode = previousNode.next
+
+  }
 }
